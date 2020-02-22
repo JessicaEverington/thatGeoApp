@@ -35,7 +35,7 @@ var app = {
     // Update DOM on a Received Event
     receivedEvent: function(id) {
 
-    // WEB SQL DATABASE
+    // WEBSQL DATABASE
       // Establish the LocalStorage Db
       db = openDatabase("places", "1", "MyPlaces", dbSize);
       // transactions are doers. In this case, the SQL statement
@@ -50,7 +50,7 @@ var app = {
         }
       );
 
-    // ADDING PLACES
+    // WEBSQL ADDING PLACES
     // Using async/await to insert places
     async function insertPlace(name, long='',lat=''){
       return new Promise(function(resolve, reject){
@@ -58,13 +58,33 @@ var app = {
         db.transaction(function(tx){
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
               console.log(results);
+              // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
+              $.ajax({
+                type: "POST",
+                url: `${baseUrl}/places`,
+                data: JSON.stringify(results),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                // get the token from local storage and add to header for authorization
+                beforeSend: function(xhr){
+                  xhr.setRequestHeader('authtoken', localStorage.getItem('token'))
+                },
+                // User token from API is saved to LocalStorage
+                success: function(response) {
+                  console.log('This is the API response from creating a place' + response);
+                },
+                error: function(e) {
+                  alert('Uh oh, you have a login error: ' + e.message);
+                }
+              });
+              //OUTSIDE THE AJAX CALL
               resolve(results);
           });  
         });
       });    
     }
 
-    // DISPLAY SAVED LIST OF PLACES
+    // WEBSQL DISPLAY SAVED LIST OF PLACES
     async function displayPlaces(tx, results){
       return new Promise((resolve, reject) => {
           // We want everything to go into the #listView

@@ -12,7 +12,7 @@
         PhoneGap Team
     </author>
     <content src="index.html" />
-    <gap:plugin name="cordova-plugin-directions" source="npm" version="0.4.0" />
+    <gap:plugin name="cordova-plugin-directions" source="npm" version="0.4.4" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
