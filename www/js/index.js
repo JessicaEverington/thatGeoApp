@@ -58,15 +58,17 @@ var app = {
         db.transaction(function(tx){
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
               console.log(results);
+              const payload = JSON.stringify({
+                "placeName": name,
+                "longitude": long,
+                "latitude": lat
+              });
+              console.log(`this is may payload ${payload}`);
               // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: JSON.stringify({
-                  "placeName": results[0].placeName,
-                  "longitude": results[0].long,
-                  "latitude": results[0].lat,
-                }),
+                data: payload,
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 // get the token from local storage and add to header for authorization
