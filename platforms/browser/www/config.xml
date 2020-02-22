@@ -6,8 +6,8 @@
     <feature name="Device">
         <param name="browser-package" value="Device" />
     </feature>
-    <name>Camera</name>
-    <description>Camera example    </description>
+    <name>thatGeoApp</name>
+    <description>thatGeoApp is my first forey into the world of MAD. This is a very basic app where I can save a place to localstorage.</description>
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
     </author>
