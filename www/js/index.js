@@ -175,7 +175,7 @@ var app = {
             localStorage.setItem('token', response.token);
             // Now we run the sync to GET our authroization
             initialSync();
-            // Once authorized, redirect
+            // Once authorized, redirect to home page
             $("body").pagecontainer("change", "#home");
           },
           error: function(e) {
@@ -187,7 +187,7 @@ var app = {
     function initialSync(){
       $.ajax({
         type: "GET",
-        url: `${baseUrl}/contacts`,
+        url: `${baseUrl}/places`,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         // get the token from local storage and add to header
@@ -210,6 +210,7 @@ var app = {
           'long': position.coords.longitude 
         };
 
+        // placing our obj into LocalStorage as a string
         localStorage.setItem('currentPosition', JSON.stringify(coords));
         console.log(coords);
         
@@ -236,7 +237,7 @@ var app = {
       }
     
       $(document).on( 'pagebeforeshow' , '#addplace' , function(event){
-        // navigator.geolocation.getCurrentPosition(onGeoSuccess, onGeoError);
+        //
       });
 
       $(document).on( 'pagebeforeshow' , '#home' , function(event){
@@ -247,5 +248,5 @@ var app = {
         });
       });
     }
-// end of var app
+// add additional functions here
 };
