@@ -57,20 +57,18 @@ var app = {
         // Add Places data to be saved in Web SQL
         db.transaction(function(tx){
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
-              console.log(`Here are the websql results ${results}`);
-              // const payload = JSON.stringify({
-              //   "placeName": name,
-              //   "longitude": long,
-              //   "latitude": lat
-              // });
-              // console.log(`this is may payload ${payload}`);
+              console.log(results);
+              console.log(results[0].placeName);
+              console.log(results[0].long);
+              console.log(results[0].lat);
               // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: results,
+                data: JSON.stringify(results),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                
                 // get the token from local storage and add to header for authorization
                 beforeSend: function(xhr){
                   xhr.setRequestHeader('authtoken', localStorage.getItem('token'))
@@ -80,12 +78,12 @@ var app = {
                   console.log('This is the API response from creating a place' + response);
                 },
                 error: function(e) {
-                  alert('Uh oh, there was a db insertion issue: ' + e.message);
+                  alert('Uh oh, you have a db insertion: ' + e.message);
                 }
               });
-              //OUTSIDE THE AJAX CALL we resolve
+              //OUTSIDE THE AJAX CALLwe resolve
               resolve(results);
-          }); // closing db transaction
+          });  
         });
       });    
     }
