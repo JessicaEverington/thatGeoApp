@@ -1,6 +1,7 @@
 var map; // Google map var
 var db; // declare our db var
 const dbSize = 5 * 1024 * 1024; // default sizing for LocalStorage db
+//Anup's authorization
 var baseUrl = "http://vanapi.gitsql.net"; // base URL for our Authorization Tokens re API login
 
 // Initialize the Google Map
@@ -42,6 +43,7 @@ var app = {
         function(tx){
           tx.executeSql(
             // Exact same kind of SQL statement as if we were doing it in mySQL
+            // if no table exists, create a "places" table
             "CREATE TABLE IF NOT EXISTS " + 
             "PLACES(ID INTEGER PRIMARY KEY ASC, placeName, long, lat)"
           );
