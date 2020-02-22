@@ -73,10 +73,11 @@ var app = {
                 },
                 // User token from API is saved to LocalStorage
                 success: function(response) {
-                  console.log('This is the API response from creating a place' + response);
+                  console.log('This is the API response from creating a place');
+                  console.log(response);
                 },
                 error: function(e) {
-                  alert('Uh oh, you have a db insertion: ' + e.message);
+                  alert('Uh oh, you have a db insertion error: ' + e.message);
                 }
               });
               //OUTSIDE THE AJAX CALLwe resolve

@@ -54,27 +54,28 @@
 
 <body>
 
+  <!-- 1. This is the LOGIN PAGE -->
   <div data-role="page" id="login">
     <div data-role="header"><h1>Login</h1></div>
+      <div data-role="content">
+          <label for="username">Username</label>
+          <input id="username" type="text" name="username" id="username" value="user2">
+          <label for="password">Password</label>
+          <input id="password" type="password" name="password" id="password" value="pw">
+      </div>
 
-    <div data-role="content">
-        <label for="username">Username</label>
-        <input id="username" type="text" name="username" id="username" value="user2">
-        <label for="password">Password</label>
-        <input id="password" type="password" name="password" id="password" value="pw">
-    </div>
+      <div data-role="footer" data-position="fixed">
+          <nav data-role="navbar">
+            <ul>
+              <li>
+                <a id="loginButton" href="#" data-icon="user" data-transition="slidedown">Login</a>
+              </li>
+            </ul>
+          </nav>
+      </div>
+  </div> 
 
-    <div data-role="footer" data-position="fixed">
-        <nav data-role="navbar">
-          <ul>
-            <li>
-              <a id="loginButton" href="#" data-icon="user" data-transition="slidedown">Login</a>
-            </li>
-          </ul>
-        </nav>
-    </div>
-</div> 
-
+  <!-- 2. This is the PLACES PAGE -->
     <div data-role="page" id="home">
       <div data-role="header"><h1>My Places</h1></div>
 
@@ -97,7 +98,8 @@
         </nav>
       </div>
     </div>
-    
+
+    <!-- 3. This is the DIRECTIONS/MAP PAGE -->
     <div data-role="page" id="directions">
       <div data-role="header"><h1>Directions</h1></div>
 
@@ -116,6 +118,7 @@
       </div>
     </div>
 
+    <!-- 4. This is the ADD NEW PLACE PAGE -->
     <div data-role="page" id="addplace">
       <div data-role="header"><h1>Add Places</h1></div>
 
@@ -126,7 +129,6 @@
           <input type="button" id="savePlace" value="Save Place">
         </div>
         
-
         <!-- <input type="button" id="launchCamera" value="Launch Camera" />
         <img id="selfie" src="" style="width: 100%;" /> -->
       </div>
