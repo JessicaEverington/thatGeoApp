@@ -57,10 +57,8 @@ var app = {
         // Add Places data to be saved in Web SQL
         db.transaction(function(tx){
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
+              console.log('insert results');
               console.log(results);
-              // console.log(results[0].placeName);
-              console.log(results[0].long);
-              console.log(results[0].lat);
               // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
               $.ajax({
                 type: "POST",
