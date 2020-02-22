@@ -62,7 +62,11 @@ var app = {
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: JSON.stringify(results),
+                data: JSON.stringify({
+                  "placeName": results[0].placeName,
+                  "longitude": results[0].long,
+                  "latitude": results[0].lat,
+                }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 // get the token from local storage and add to header for authorization
