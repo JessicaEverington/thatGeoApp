@@ -59,11 +59,12 @@ var app = {
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
               console.log('insert results');
               console.log(results);
+              console.log(lat);
               // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: JSON.stringify({"placeName": results}),
+                data: JSON.stringify({placeName: name}),
                 // data: JSON.stringify(results),
                 // data: JSON.stringify({
                 //   placeName: results[0].placeName,
