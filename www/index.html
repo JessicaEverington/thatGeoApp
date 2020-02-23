@@ -80,7 +80,7 @@
       <div data-role="header"><h1>My Places</h1></div>
 
       <div data-role="content">
-          <div><p>Tap on an item to get directions!</p></div>
+          <div data-role="header"><p>Tap on an item to get directions!</p></div>
             <ul data-role="listview" id="listView">
             <li>
               <!-- <a data-item='1'>Hardcoded - test</a> -->
@@ -100,8 +100,7 @@
     </div>
 
     <!-- 3. This is the DIRECTIONS/MAP PAGE -->
-    <!-- Dont need this anymore, user taps on place for directions -->
-    <!-- <div data-role="page" id="directions">
+    <div data-role="page" id="directions">
       <div data-role="header"><h1>Directions</h1></div>
 
       <div data-role="content">
@@ -117,7 +116,7 @@
           </ul>
         </nav>
       </div>
-    </div> -->
+    </div>
 
     <!-- 4. This is the ADD NEW PLACE PAGE -->
     <div data-role="page" id="addplace">
@@ -130,6 +129,7 @@
           <input type="button" id="savePlace" value="Save Place">
         </div>
         
+        <!-- STRETCH GOAL Try and get this working with saving places -->
         <!-- <input type="button" id="launchCamera" value="Launch Camera" />
         <img id="selfie" src="" style="width: 100%;" /> -->
       </div>
@@ -138,7 +138,8 @@
         <nav data-role="navbar">
           <ul>
             <li><a href="#home" data-icon="home" data-transition="slidedown">My Places</a></li>
-            <li><a href="#directions" data-icon="location" data-transition="slidedown">Directions</a></li>
+            <!-- Dont need this anymore, user taps on place for directions -->
+            <!-- <li><a href="#directions" data-icon="location" data-transition="slidedown">Directions</a></li> -->
             <li><a href="#addplace" data-icon="plus" data-transition="slidedown">Add Places</a></li>
           </ul>
         </nav>
