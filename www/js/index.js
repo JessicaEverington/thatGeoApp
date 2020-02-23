@@ -64,6 +64,7 @@ var app = {
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
+                // need to use the values going into webSQL
                 data: JSON.stringify({
                   placeName: name,
                   longitude: long,

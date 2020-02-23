@@ -59,11 +59,23 @@ var app = {
           tx.executeSql(`INSERT INTO places (placeName, long, lat) VALUES (?,?,?)`, [name, long, lat], (tx, results)=>{
               console.log('insert results');
               console.log(results);
+              console.log(lat);
               // AJAX CALL TO THE DB TO SIMULTANEOUSLY "POST" the data to the db
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: JSON.stringify(results),
+                // need to use the values going into webSQL
+                data: JSON.stringify({
+                  placeName: name,
+                  longitude: long,
+                  latitude: lat
+                }),
+                // data: JSON.stringify(results),
+                // data: JSON.stringify({
+                //   placeName: results[0].placeName,
+                //   longitude: results[0].long,
+                //   latitude: results[0].lat,
+                // }),
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 
@@ -73,13 +85,14 @@ var app = {
                 },
                 // User token from API is saved to LocalStorage
                 success: function(response) {
-                  console.log('This is the API response from creating a place' + response);
+                  console.log('This is the API response from creating a place');
+                  console.log(response);
                 },
                 error: function(e) {
-                  alert('Uh oh, you have a db insertion: ' + e.message);
+                  alert('Uh oh, you have a db insertion error: ' + e.message);
                 }
               });
-              //OUTSIDE THE AJAX CALLwe resolve
+              //OUTSIDE THE AJAX CALL we resolve
               resolve(results);
           });  
         });
