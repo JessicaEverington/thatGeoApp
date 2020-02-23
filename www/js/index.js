@@ -64,7 +64,11 @@ var app = {
               $.ajax({
                 type: "POST",
                 url: `${baseUrl}/places`,
-                data: JSON.stringify({placeName: name}),
+                data: JSON.stringify({
+                  placeName: name,
+                  longitude: long,
+                  latitude: lat
+                }),
                 // data: JSON.stringify(results),
                 // data: JSON.stringify({
                 //   placeName: results[0].placeName,
