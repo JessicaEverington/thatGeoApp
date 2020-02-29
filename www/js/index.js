@@ -125,12 +125,14 @@ var app = {
           }
 
           // BINDING FUNCTIONS
+          // this needs to be inside displayPlaces() to have tx access
           $("#listView").listview("refresh");
           $(".navigateTo").bind("tap", function(event, ui){ launchDirections(event); });
           resolve();
       });
     }
       // BINDING FUNCTIONS
+      // want to bind these IDs so when a user taps then this Fn runs
       $("#savePlace").bind("tap",  function(event, ui) { saveMyPlace(); });
       $("#loginButton").bind("tap", function(event, ui){ performLogin(); });
       $("#launchCamera").bind("tap", function(event, ui){ takePic(); });
@@ -155,12 +157,12 @@ var app = {
             destinationType: Camera.DestinationType.FILE_URI,
             cameraDirection: Camera.Direction.FRONT
           });
-  
+        // success method display img src in #selfie
         function onSuccess(imageURI) {
           var image = document.getElementById('selfie');
           image.src = imageURI;
         }
-        
+        // fail method displays a message to user 
         function onFail(message) {
           alert('Failed because: ' + message);
         }
@@ -169,20 +171,26 @@ var app = {
 
       // SAVE PLACES
       function saveMyPlace(){
+        // get the value of my current place
         let currentPlaceName = $("#placeName").val();
         
+        // use the phone's geolocation to get the coords 
         navigator.geolocation.getCurrentPosition(saveRecord, onError);
 
         function saveRecord(position){
+          // insert into webSQL to save the record
           insertPlace(currentPlaceName, position.coords.longitude,  position.coords.latitude);
           console.log(currentPlaceName);
+          // go to the home page after you're done 
           $("body").pagecontainer("change", "#home");
         }
         
         async function onError(error) {
           alert('code: '    + error.code    + '\n' +
               'message: ' + error.message + '\n');
+          // make sure to wait for the insertPlace to run first
           await insertPlace(currentPlaceName, 'N/A', 'N/A');
+          // now take me home
           $("body").pagecontainer("change", "#home");
         }
       }
@@ -191,8 +199,8 @@ var app = {
       function performLogin(){
         // what we're using to login
         data = {
-            "username": $("#username").val(),
-            "password": $("#password").val()
+          "username": $("#username").val(),
+          "password": $("#password").val()
         }
 
         // Post the form data to Anup's API oAuth
@@ -230,15 +238,22 @@ var app = {
           xhr.setRequestHeader('authtoken', localStorage.getItem('token'))
         },
         success: function(response) {
-            console.log('this is your token' + response);
+          //When we initialize we must also boot up from the Node DB
+          console.log(response);
+          for ( var i = 0; i < response.length; i++) {
+            insertPlace(response[i].placeName, response[i].longitude, response[i].latitude)
+            // this is looping over all the places stored in the Node db for rendering
+          };
         },
         error: function(e) {
+          // error handling to let user know if something happened and what it was
             alert('Uh oh, your authorization sync has the following error: ' + e.message);
           }
       }); 
     }
 
     // GEOLOCATION
+    // Cordova feature - taps into phone's geo and allows us to use it 
     function onGeoSuccess(position) {
         let coords = { 
           'lat': position.coords.latitude, 
@@ -249,16 +264,19 @@ var app = {
         localStorage.setItem('currentPosition', JSON.stringify(coords));
         console.log(coords);
         
+        // creating the var string for place
         var myLatLng = {
           lat: coords.lat, 
           lng: coords.long
         };
 
+        // open up the Google map
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 20,
           center: myLatLng
         });
 
+        // Google mapalicious dishing my saved place to find my way there
         new google.maps.Marker({
           position: myLatLng,
           map: map,
@@ -272,9 +290,10 @@ var app = {
       }
     
       $(document).on( 'pagebeforeshow' , '#addplace' , function(event){
-        //
+        // before the page load I want to 
       });
 
+      // goes into localstorage to get places from webSQL table
       $(document).on( 'pagebeforeshow' , '#home' , function(event){
         db.transaction(function(tx){
           tx.executeSql(`SELECT * FROM places`, [], (tx, res)=>{
